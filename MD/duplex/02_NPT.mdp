@@ -1,0 +1,48 @@
+; Parameters describing what to do, when to stop and what to save
+
+integrator      = md            ; leap-frog integrator
+nsteps          = 5000000        ; 2 * 5000000 = 10000 ps, here 10 ns
+dt              = 0.002         ; 2 fs
+nstxout         = 1000          ; save coordinates every 1.0 ps
+nstvout         = 1000          ; save velocities every 1.0 ps
+nstenergy       = 1000          ; save energies every 1.0 ps
+nstlog          = 1000          ; update log file every 1.0 ps
+
+
+; Parameters describing how to find the neighbors of each atom and how to calculate the interactions
+
+nstlist                 = 20             ; Frequency to update the neighbor list and long range forces
+cutoff-scheme           = Verlet        ; Generate a pair list with buffering, exact cut-off at rvdw=rcoulomb
+rlist                   = 1.2           ; Cut-off for making neighbor list (short range forces)
+vdwtype                 = cutoff       ; Twin range cut-offs with neighbor list cut-off rlist and VdW cut-off rvdw, where rvdw ≥ rlist
+vdw-modifier            = force-switch  ; Smoothly switches the forces to zero between rvdw-switch and rvdw
+rvdw_switch             = 1.0           ; where to start switching the LJ force and possibly the potential, only relevant when force or potential switching is used
+rvdw                    = 1.2           ; Short-range Van der Waals cut-off
+coulombtype             = pme           ; Treatment of long range electrostatic interactions
+rcoulomb                = 1.2           ; Short-range electrostatic cut-off
+DispCorr = EnerPres
+
+constraints             = h-bonds       ; Convert the bonds with H-atoms to constraints
+constraint_algorithm    = LINCS         ; LINear Constraint Solver.
+ 
+; Temperature coupling is on
+tcoupl          = V-rescale                 ; modified Berendsen thermostat
+tc-grps         = RNA SOL_ION  ; two coupling groups - more accurate
+tau_t           = 0.1     0.1           ; time constant, in ps
+ref_t           = 300     300           ; reference temperature, one for each group, in K
+
+; Pressure coupling is on
+pcoupl                  = Parrinello-Rahman         ; Pressure coupling on in NPT
+pcoupltype              = isotropic                 ; uniform scaling of box vectors
+tau_p                   = 2.0                       ; time constant, in ps
+ref_p                   = 1.0                       ; reference pressure, in bar
+compressibility     = 4.5e-5                ; isothermal compressibility of water, bar^-1
+refcoord_scaling    = com
+
+; COM motion removal
+; These options remove motion of the protein relative to the solvent/ions
+nstcomm                 = 100                   ; frequency for center of mass motion removal
+comm_mode               = linear
+comm_grps               = RNA   SOL_ION
+
+

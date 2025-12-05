@@ -1,0 +1,8 @@
+.DS_Store
+*.pyc
+__pycache__/
+.vscode/
+.idea/
+MD/duplex/*matrix.csv
+MD/5p/*matrix.csv
+

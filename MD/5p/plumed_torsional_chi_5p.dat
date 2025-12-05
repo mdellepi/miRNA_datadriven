@@ -1,0 +1,39 @@
+# This reads in the template pdb file and thus allows us to use the @nonhydrogens
+# special group later in the input
+MOLINFO STRUCTURE=5p.pdb MOLTYPE=rna
+#
+# The following commands compute all the angles of the RNA for you
+#
+# Chi angles
+#
+rA1c: TORSION ATOMS=@chi-A1
+rA2c: TORSION ATOMS=@chi-A2
+rA3c: TORSION ATOMS=@chi-A3
+rA4c: TORSION ATOMS=@chi-A4
+rA5c: TORSION ATOMS=@chi-A5
+rA6c: TORSION ATOMS=@chi-A6
+rA7c: TORSION ATOMS=@chi-A7
+rA8c: TORSION ATOMS=@chi-A8
+rA9c: TORSION ATOMS=@chi-A9
+rA10c: TORSION ATOMS=@chi-A10
+rA11c: TORSION ATOMS=@chi-A11
+rA12c: TORSION ATOMS=@chi-A12
+rA13c: TORSION ATOMS=@chi-A13
+rA14c: TORSION ATOMS=@chi-A14
+rA15c: TORSION ATOMS=@chi-A15
+rA16c: TORSION ATOMS=@chi-A16
+rA17c: TORSION ATOMS=@chi-A17
+rA18c: TORSION ATOMS=@chi-A18
+rA19c: TORSION ATOMS=@chi-A19
+rA20c: TORSION ATOMS=@chi-A20
+rA21c: TORSION ATOMS=@chi-A21
+rA22c: TORSION ATOMS=@chi-A22
+rA23c: TORSION ATOMS=@chi-A23
+#
+# This command stores all the Ramachandran angles that were computed
+#
+angles: COLLECT_FRAMES ARG=rA1c,rA2c,rA3c,rA4c,rA5c,rA6c,rA7c,rA8c,rA9c,rA10c,rA11c,rA12c,rA13c,rA14c,rA15c,rA16c,rA17c,rA18c,rA19c,rA20c,rA21c,rA22c,rA23c
+
+# This command outputs all the Ramachandran angles that were stored to a file called angles_data
+OUTPUT_ANALYSIS_DATA_TO_COLVAR USE_OUTPUT_DATA_FROM=angles ARG=angles.* FILE=angles_data_chi
+

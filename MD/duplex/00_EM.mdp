@@ -1,0 +1,23 @@
+; Parameters describing what to do, when to stop and what to save
+
+integrator              = steep         ; Algorithm (steep = steepest descent minimization)
+emtol                   = 1000.0        ; Stop minimization when the maximum force < 1000.0 kJ/mol/nm
+nsteps                  = 20000         ; Maximum number of (minimization) steps to perform
+
+; Parameters describing how to find the neighbors of each atom and how to calculate the interactions
+
+nstlist                 = 20             ; Frequency to update the neighbor list and long range forces
+cutoff-scheme           = Verlet        ; Generate a pair list with buffering, exact cut-off at rvdw=rcoulomb
+rlist                   = 1.0           ; Cut-off for making neighbor list (short range forces)
+vdwtype                 = cutoff       ; Twin range cut-offs with neighbor list cut-off rlist and VdW cut-off rvdw, where rvdw ≥ rlist
+vdw-modifier            = force-switch  ; Smoothly switches the forces to zero between rvdw-switch and rvdw
+rvdw_switch             = 0.8           ; where to start switching the LJ force and possibly the potential, only relevant when force or potential switching is used
+rvdw                    = 1.0           ; Short-range Van der Waals cut-off
+coulombtype             = pme           ; Treatment of long range electrostatic interactions
+rcoulomb                = 1.0           ; Short-range electrostatic cut-off
+DispCorr = EnerPres
+
+constraints             = h-bonds       ; Convert the bonds with H-atoms to constraints
+constraint_algorithm    = LINCS         ; LINear Constraint Solver. 
+
+
